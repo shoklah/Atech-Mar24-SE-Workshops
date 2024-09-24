@@ -47,17 +47,17 @@ char *appendLast(char *word)
     return word;
 }
 
-// char *addAs(char *word, int index) {
-//     int wordLength = strlen(word)
-//     int newLength =  wordLength + index;
-//     char *newWord = (char *)malloc(sizeof(char *) * newLength);
-//     strcpy(newWord, word)
-//     for (i = wordLength - 1; i < newLength; i++) {
-//         newWord[i] = 'a';
-//     }
-//     newWord[newLength] + '\0';
-//     return newWord;
-// }
+char *addAs(char *word, int index) {
+    int wordLength = strlen(word);
+    int newLength =  wordLength + index;
+    char *newWord = (char *)malloc(sizeof(char *) * newLength);
+    strcpy(newWord, word);
+    for (int i = wordLength - 1; i < newLength; i++) {
+        newWord[i] = 'a';
+    }
+    newWord[newLength] + '\0';
+    return newWord;
+}
 
 char **splitSentence(char *sentence)
 {
@@ -87,7 +87,6 @@ char **splitSentence(char *sentence)
             }
             word[wordIndex + 1] = '\0';
             charIndex = i + 1;
-            printf("Word: %s\n", word);
             array[outIndex] = word;
             outIndex++;
         }
@@ -98,10 +97,21 @@ char **splitSentence(char *sentence)
 
 int main(void)
 {
-    char test[100] = "The quick brown fox jumped over the lazy dog";
+    // char test[100] = "The quick brown fox jumped over the lazy dog";
+    char* test = malloc(100 * sizeof(char));
+    printf("Add phrase:");
+    fgets(test, 100, stdin);
+    // size_t len = strlen(test);
+    // if (len > 0 && test[len - 1] == '\n') {
+    //     test[len - 1] = '\0';
+    // }
     char **split = splitSentence(test);
+    char *result = (char *)malloc(sizeof(char *) * (200));
 
-    for (int i = 0; i < 9; i++) {
+    // // Print the entered phrase
+    // printf("You entered: %s\n", test);
+
+    for (int i = 0; i < 1; i++) {
         if (
             split[i][0] ==  'a' ||
             split[i][0] ==  'e' ||
@@ -109,10 +119,28 @@ int main(void)
             split[i][0] ==  'o' ||
             split[i][0] ==  'u'
         ) {
-            // char *newWord = (char *)malloc(sizeof(char *) * strlen(split[i]) + 2);
-            // split[i] = 
-            printf("Add ma: %s\n", addMa(split[i]));
+            char *wordMa = (char *)malloc(sizeof(char *) * (strlen(addMa(split[i]))));
+            strcpy(wordMa, addMa(split[i]));
+            split[i] = wordMa;
+        } else {
+            char *wordLast = (char *)malloc(sizeof(char *) * (strlen(split[i]) + 2));
+            strcpy(wordLast, addMa(appendLast(split[i])));
+            split[i] = wordLast;
         }
+
+        char *wordAs = (char *)malloc(sizeof(char *) * (strlen(split[i]) + i));
+        strcpy(wordAs, addAs(split[i], i));
+        split[i] = wordAs;
+
+        if (i == 0) {
+            strcpy(result, split[i]);
+        } else {
+            strcat(result, " ");
+            strcat(result, split[i]);
+        }
+
     }
+    printf("Original: %s,\nResult: %s\n", test, result);
+    free(result);
     return 0;
 }
