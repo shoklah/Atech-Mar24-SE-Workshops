@@ -18,6 +18,26 @@ struct Node* createNode(int data, struct Node* head){
     return newNode;
 }
 
+struct Node* reverseLinkedList(struct Node* head){
+    struct Node* prev = NULL;
+    struct Node* current = head;
+    struct Node* next = NULL;
+ 
+    while(current != NULL){
+       
+        next = current->next;
+        
+        current->next = prev;
+        
+        prev = current;
+       
+        current = next;
+        
+    }
+
+    return prev;
+}
+
 void printlist(struct Node* head){
     struct Node* current = head;
     while(current != NULL) {
@@ -34,6 +54,7 @@ int main() {
     for (int i = 0; i < 5; i++) {
         list = createNode(data[i], list);
     }
+    list = reverseLinkedList(list);
     printlist(list);
     return 0;
 }
